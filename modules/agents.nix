@@ -1,0 +1,47 @@
+{...}:
+{
+	programs.opencode = {
+		enable = true;
+		enableMcpIntegration = true;
+		settings = {
+			username = "😺 Andrew Nguyen";
+			theme = "system";
+			permission = {
+				list = "deny";
+				grep = "deny";
+				glob = "deny";
+				webfetch = "deny";
+				websearch = "deny";
+			};
+			plugin = [
+				"opencode-gemini-auth@latest"
+			];
+			mcp = {
+				serena = {
+					enabled = true;
+					type = "remote";
+					url = "http://localhost:12345/mcp";
+					timeout = 2000;
+				};
+
+				context7 = {
+					enabled = true;
+					type = "local";
+					command = [ "pnpm" "dlx" "@upstash/context7-mcp" ];
+					environment = {
+						api-key = "\${env:CONTEXT_7_API_KEY}";
+					};
+				};
+
+				tavily = {
+					enabled = true;
+					type = "local";
+					command = [ "pnpm" "dlx" "tavily-mcp@latest" ];
+					environment = {
+						TAVILY_API_KEY = "\${env:TAVILY_API_KEY}";
+					};
+				};
+			};
+		};
+	};
+}

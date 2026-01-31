@@ -1,17 +1,18 @@
-{config, pkgs, username, stateVersion, ...}:
+{config, pkgs, username, stateVersion, ...}@inputs:
 {
 	imports = [
 		./modules/bundle.nix
 	];
 	home = {
+	# Do not override var here
 		inherit username stateVersion;
 		homeDirectory = "/home/${username}";
 	};
 	gtk = {
 		enable = true;
 		font = {
-			name = "JetBrainsMono Nerd Font";
+			name = "${inputs.fontFamily}";
 			size = 12;
-		}
-	}
+		};
+	};
 }
