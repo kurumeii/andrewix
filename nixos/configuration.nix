@@ -27,6 +27,7 @@
     "nix-command"
     "flakes"
   ];
+  nix.settings.auto-optimise-store = true;
   nixpkgs.config.allowUnfree = true;
   hardware.aic8800.enable = true;
   system.stateVersion = stateVersion;

@@ -35,13 +35,13 @@
     settings = {
       username = "😺 Andrew Nguyen";
       theme = "system";
-      # permission = {
-      # 	list = "deny";
-      # 	grep = "deny";
-      # 	glob = "deny";
-      # 	webfetch = "deny";
-      # 	websearch = "deny";
-      # };
+      permission = {
+        list = "deny";
+        grep = "deny";
+        glob = "deny";
+        # webfetch = "deny";
+        # websearch = "deny";
+      };
       plugin = [
         "opencode-gemini-auth@latest"
       ];

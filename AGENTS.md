@@ -9,7 +9,7 @@ This repository contains Andrew's NixOS and home-manager dotfiles configuration 
 # Update flake inputs (run from ~/dotconfigs)
 nix flake update --flake ~/dotconfigs
 
-# Switch NixOS configuration
+# Switch NixOS configuration (Apply changes)
 nh os switch ~/dotconfigs
 
 # Clean all nix garbage
@@ -19,12 +19,13 @@ nh clean all
 nix store optimise
 ```
 
-### Development Shell
+### Search and Development
 ```bash
-# Enter development shell (defined in flake.nix devShells)
-nix develop
+# Search for packages (replaces nix search)
+nh search <package-name>
 
-# Or use the default shell directly
+# Enter development shell
+nix develop
 ```
 
 ### Flake Commands
@@ -48,7 +49,7 @@ nix flake check
 - Let-bindings: use `let ... in` pattern with proper spacing
 
 ### Nix Conventions
-- Always use `{ pkgs, ... }@inputs` pattern for module inputs
+- Always use `{ pkgs, ... }@inputs` or `{ config, pkgs, ... }@inputs` pattern for module inputs
 - Import modules using `./relative/path.nix` syntax
 - Use `inherit` for passing arguments to reduce repetition
 - Keep configuration options organized by subsystem (programs, services, etc.)
@@ -154,7 +155,7 @@ nix flake check
 ├── home.nix               # Home-manager entry point
 ├── nixos/                 # NixOS system modules
 │   ├── configuration.nix  # Main system config
-│   ├── neovim.nix         # Neovim/Nvf config
+│   ├── i18n.nix           # Locale and Input Method
 │   ├── programs.nix       # System programs
 │   └── ...
 ├── modules/               # Home-manager modules
@@ -170,6 +171,5 @@ nix flake check
 - State version: `25.11` - do not change unless migrating
 - Hostname: `andrewix` - used in flake.nix nixosConfigurations
 - Username: `andrew` - used throughout configuration
-- Font family: `CaskaydiaCove Nerd Font` - used in GTK and terminal
 - The flake uses `nixd` for Nix LSP and `nixfmt` for formatting
 - MCP servers (serena, context7, tavily) are configured in `modules/agents.nix`
