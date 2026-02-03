@@ -1,10 +1,9 @@
-inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+inputs:
+inputs.flake-parts.lib.mkFlake { inherit inputs; } {
   systems = [ "x86_64-linux" ];
 
-  imports = [
-    ./modules/flake/hosts.nix
-    inputs.flake-file.flakeModules.default
-  ];
+  imports =
+    [ ./hosts/default.nix inputs.flake-file.flakeModules.default ];
 
   flake-file = {
     description = "Andrewix - Dendritic Configuration";
@@ -31,8 +30,6 @@ inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
   };
 
   perSystem = { system, pkgs, ... }: {
-    devShells.default = pkgs.mkShell {
-      packages = [ pkgs.git pkgs.neovim ];
-    };
+    devShells.default = pkgs.mkShell { packages = [ pkgs.git pkgs.neovim ]; };
   };
 }
