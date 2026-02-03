@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   services = {
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
@@ -20,17 +20,17 @@
       pulse.enable = true;
       jack.enable = true;
     };
+    # Disabled in favor of TLP (managed per host) or other power managers
     power-profiles-daemon.enable = false;
-    tlp = {
-      enable = true;
-      settings = {
-        USB_AUTOSUSPEND = 0;
-        STOP_CHARGE_THRESH_BAT0 = 90;
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      };
-    };
   };
+
+  # Exclude default Gnome applications
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    epiphany # web
+    yelp # help
+    rhythmbox # music
+    gnome-contacts
+    xterm
+  ];
 }
