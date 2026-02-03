@@ -1,47 +1,57 @@
 # Andrewix - NixOS & Home Manager Configuration
 
-## 🚀 Cách sử dụng nhanh
+A modular, auto-importing configuration for NixOS and Home Manager using flake-parts and import-tree.
 
-Để áp dụng cấu hình mới nhất:
+## Quick Start
 
+Apply the latest configuration:
 ```bash
 nh os switch ~/dotconfigs
 ```
 
-Để cập nhật tất cả các thư viện (inputs):
-
+Update all flake inputs:
 ```bash
 nix flake update --flake ~/dotconfigs
 ```
 
-## 🛠 Cấu trúc thư mục
+Check for errors before applying:
+```bash
+nix flake check
+```
 
-- `modules/system/features/`: Chứa các module cấu hình cấp hệ thống (NixOS). Mọi file `.nix` thêm vào đây sẽ được tự động import.
-- `modules/user/features/`: Chứa các module cấu hình cấp người dùng (Home Manager). Mọi file `.nix` thêm vào đây sẽ được tự động import.
-- `modules/hosts/`: Cấu hình riêng cho từng thiết bị (Phần cứng, hostname).
-- `flake.nix`: Điểm bắt đầu của toàn bộ cấu hình.
+## Directory Structure
 
-## 📝 Cách chỉnh sửa & Thêm mới
+- `modules/system/features/` - System-level modules (NixOS). Auto-imported via import-tree.
+- `modules/user/features/` - User-level modules (Home Manager). Auto-imported via import-tree.
+- `modules/hosts/<hostname>/` - Host-specific configurations (hardware, hostname).
+- `modules/flake/` - Flake logic and `mkSystem` helper.
 
-### 1. Thay đổi cấu hình hiện có
-Tìm file tương ứng trong `modules/system/features/` (cho hệ thống) hoặc `modules/user/features/` (cho ứng dụng/cá nhân) và chỉnh sửa trực tiếp.
+## Adding New Features
 
-### 2. Thêm tính năng mới
-Chỉ cần tạo một file `.nix` mới trong thư mục `features/` tương ứng.
-Ví dụ: Tạo `modules/user/features/vscode.nix` để cấu hình VS Code.
+Create a new `.nix` file in the appropriate `features/` directory. It will be auto-imported.
 
-Cấu trúc file mẫu:
+Example for a user module (`modules/user/features/myapp.nix`):
 ```nix
 { pkgs, ... }: {
-  programs.vscode = {
+  programs.myapp = {
     enable = true;
-    # Thêm cấu hình của bạn ở đây
+    # Your configuration here
   };
 }
 ```
 
-### 3. Kiểm tra lỗi trước khi lưu
-Luôn chạy lệnh sau để đảm bảo không có lỗi cú pháp hoặc logic:
-```bash
-nix flake check
-```
+## Code Style
+
+- **Files:** kebab-case.nix
+- **Variables:** camelCase
+- **Booleans:** enable/disable prefix
+- **Formatter:** nixfmt with 2-space indentation
+
+## Hosts
+
+- `andrew-pc` - Desktop workstation
+- `andrew-laptop` - Laptop (includes aic8800 WiFi driver)
+
+## References
+
+See [AGENTS.md](AGENTS.md) for developer documentation on building, testing, and code conventions.
