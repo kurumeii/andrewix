@@ -23,7 +23,7 @@ let
       modules = [
         ../hosts/${hostName}/default.nix
         # inputs.nvf.nixosModules.default
-        inputs.homeManager.nixosModules.home-manager
+        inputs.home-manager.nixosModules.home-manager
         {
           nixpkgs.pkgs = import inputs.nixpkgs {
             inherit system;
