@@ -1,5 +1,5 @@
 { pkgs, inputs, ... }: {
-  home-manager.users.andrew.programs.mcp = {
+  programs.mcp = {
     enable = true;
     servers = {
       serena = {
@@ -18,7 +18,7 @@
       };
     };
   };
-  home-manager.users.andrew.programs.opencode = {
+  programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
     settings = {
@@ -33,11 +33,11 @@
     };
   };
 
-  environment.systemPackages = [
+  home.packages = [
     inputs.serena.packages.${pkgs.stdenv.hostPlatform.system}.serena
     (pkgs.writeShellScriptBin "start-serena" ''
       # Kill any existing instances to avoid port conflicts
-      pkill -f "serena start-mcp-server"
+      ${pkgs.procps}/bin/pkill -f "serena start-mcp-server"
 
       # Start the server
       nohup serena start-mcp-server --transport streamable-http --port 12345 --context ide > /dev/null 2>&1 &
@@ -46,7 +46,7 @@
       sleep 2
 
       # Verify it is actually running
-      PID=$(pgrep -f "serena start-mcp-server")
+      PID=$(${pkgs.procps} -f "serena start-mcp-server")
 
       if [ -z "$PID" ]; then
           echo "❌ Error: Server failed to start."

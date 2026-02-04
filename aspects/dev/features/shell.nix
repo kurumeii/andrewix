@@ -1,5 +1,5 @@
 { pkgs, self, ... }: {
-  home-manager.users.andrew.programs.fish = {
+  programs.fish = {
     enable = true;
     interactiveShellInit = ''
       set fish_greeting
@@ -34,7 +34,7 @@
       }
     ];
   };
-  home-manager.users.andrew.programs.oh-my-posh = {
+  programs.oh-my-posh = {
     enable = true;
     configFile = "${self}/andrew.omp.json";
   };

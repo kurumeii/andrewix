@@ -7,6 +7,9 @@ let
   mkSystem = import ../lib/mksystem.nix {
     inherit inputs username stateVersion fontFamily driveMountPath;
   };
+  mkHome = import ../lib/mkHome.nix {
+    inherit inputs username stateVersion fontFamily driveMountPath;
+  };
 in {
   flake.nixosConfigurations = {
     andrew-pc = mkSystem "andrew-pc" [
@@ -26,5 +29,13 @@ in {
       ../aspects/apps
       ../aspects/dev
     ];
+  };
+  flake.homeConfigurations = {
+	  andrew-work-pc = mkHome "andrew-work-pc" [
+		  ../aspects/dev
+			  ../aspects/apps/features/agents.nix
+			  ../aspects/apps/features/misc.nix
+			  ../aspects/system/features/cli-tools.nix
+	  ];
   };
 }

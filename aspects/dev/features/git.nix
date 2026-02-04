@@ -1,17 +1,20 @@
-{ ... }: {
-  home-manager.users.andrew.programs.git = {
+{ hostname, ... }:
+let email = if hostname == "andrew-work-pc" then "babybangunny@gmail.com" else "andrew.nguyen1@techvify.com.vn";
+in 
+{
+  programs.git = {
     enable = true;
     settings = {
-      user.email = "babybangunny@gmail.com";
+      user.email = email;
       user.name = "Andrew Nguyen";
     };
   };
-  home-manager.users.andrew.programs.gh = {
+  programs.gh = {
     enable = true;
     gitCredentialHelper.enable = true;
     settings = { editor = "nvim"; };
   };
-  home-manager.users.andrew.programs.lazygit = {
+  programs.lazygit = {
     enable = true;
     settings = {
       git = {
@@ -30,7 +33,7 @@
     };
   };
 
-  home-manager.users.andrew.programs.difftastic = {
+  programs.difftastic = {
     enable = true;
     # git.enable = true; # Removed because it might conflict or be redundant if difftastic is enabled
     # git.diffToolMode = true;
